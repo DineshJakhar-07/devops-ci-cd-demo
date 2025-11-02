@@ -24,16 +24,17 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # ✅ Fix: Set up Docker Buildx (required for buildx commands)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # ✅ Build Docker image
+      - name: Define IMAGE_NAME
+        run: echo "IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/devops-ci-cd-demo:latest" >> $GITHUB_ENV
+
       - name: Build Docker image
-        run: docker buildx build --load -t ${{ secrets.DOCKER_USERNAME }}/devops-ci-cd-demo:latest .
+        run: docker buildx build --load -t $IMAGE_NAME .
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Push image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/devops-ci-cd-demo:latest
+        run: docker push $IMAGE_NAME
