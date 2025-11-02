@@ -2,18 +2,18 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main]
-  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -25,4 +25,10 @@ jobs:
         run: npm test
 
       - name: Build Docker image
-        run: docker build -t yourusername/devops-ci-cd:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-ci-cd-demo:latest .
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/devops-ci-cd-demo:latest
