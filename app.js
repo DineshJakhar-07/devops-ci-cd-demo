@@ -12,7 +12,10 @@ app.use('/', (req, res) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log("Server running successfully with CI pipeline");
+  });
 }
 
 module.exports = app;
