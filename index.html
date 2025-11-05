@@ -1,14 +1,100 @@
-<!doctype html>
-<html>
-  <head><meta charset="utf-8"><title>CI/CD Demo</title></head>
-  <body>
-    <h1>CI/CD Pipeline Demo</h1>
-    <h1>Welcome to DevOps CI/CD Demo - Version 2</h1>
-    <h1>drfvgbyhuijkommerftgvbyhnjm</h1>
-    <script>
-      fetch('/api/hello')
-        .then(r => r.json())
-        .then(j => document.getElementById('msg').textContent = j.message);
-    </script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CI/CD Pipeline Demo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin: 10px 0;
+    }
+    h2 {
+      color: #00d8ff;
+      font-weight: 500;
+    }
+    p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      line-height: 1.5;
+      margin: 10px 0 30px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      width: 85%;
+      max-width: 700px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #00d8ff;
+      color: #000;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00a9cc;
+      transform: scale(1.05);
+    }
+    footer {
+      margin-top: 50px;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>🚀 CI/CD Pipeline Demo</h1>
+    <h2>Automating Deployment with GitHub Actions, Docker & Render</h2>
+    <p>
+      This project demonstrates a fully automated CI/CD workflow.  
+      Every time code is pushed to GitHub, our pipeline automatically builds a Docker image, tests it, and deploys the latest version here.
+    </p>
+
+    <button id="fetchBtn">Check API Health</button>
+    <p id="msg">Click the button to test the backend API →</p>
+  </div>
+
+  <footer>
+    Version 2.0 | Powered by Docker 🐳 + GitHub Actions ⚙️ + Render ☁️
+  </footer>
+
+  <script>
+    document.getElementById('fetchBtn').addEventListener('click', async () => {
+      try {
+        const response = await fetch('/api/hello');
+        const data = await response.json();
+        document.getElementById('msg').textContent = data.message;
+      } catch (err) {
+        document.getElementById('msg').textContent = "Error fetching API!";
+      }
+    });
+  </script>
+</body>
 </html>
